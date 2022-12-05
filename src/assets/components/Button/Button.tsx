@@ -1,10 +1,9 @@
-import React from "react";
-import "./Dialog.module.css";
+import React from "react"
 
-export function Dialog(prop: any): JSX.Element {
+export function Btn (props:React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <nav className="AdvenccreCmp-Button bg-slate-200 sticky top-0 left-0 w-full">
-      {prop}
-    </nav>
-  );
+    <button type={props.type} name={props.name} className="bg-slate-300 py-2.5 px-5 active:bg-slate-200 rounded">
+      {props.children}
+    </button>
+  )
 }

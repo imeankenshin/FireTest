@@ -2,12 +2,14 @@ import React from "react";
 
 export default function Sbar_item(props: any): JSX.Element {
   return (
-    <a
-      className="AdvenccreCmp-Sbar_item active:bg-lime-200 items-center sticky top-0 left-0 flex py-2 px-3 rounded-md"
-      href={props.href}
-    >
-      <span className="mr-4 text-2xl">{props.icon}</span>
-      <span className="font-semibold text-xl">{props.title}</span>
-    </a>
+    <li role="menuitem" tabIndex={props.tabIndex}>
+      <a
+        className="AdvenccreCmp-Sbar_item active:bg-[#00ff1940] outline-none focus-visible:bg-[#00ff1940] items-center sticky top-0 left-0 flex py-1.5 px-2 rounded-sm"
+        href={props.href}
+      >
+        <span className="mr-4 text-md">{props.icon}</span>
+        <span className="font-semibold text-sm">{props.title}</span>
+      </a>
+    </li>
   );
 }

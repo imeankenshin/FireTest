@@ -3,8 +3,11 @@ import { useState } from "react";
 
 export default function AppBar(props: any): JSX.Element {
   return (
-    <nav className="AdvenccreCmp-AppBar bg-gray-200 sticky top-0 left-0 w-full p-3">
-      {props.children}
+    <header>
+    <nav className="flex py-4 px-6 fixed top-0 left-0 w-full justify-between">
+      <p className="text-xl font-semibold">{props.title}</p>
+      <div>{props.children}</div>
     </nav>
+  </header>
   );
 }
