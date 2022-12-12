@@ -17,7 +17,8 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/container-queries'),
     plugin(function({ addVariant }) {
-      addVariant('child', '&>*')
+      addVariant('child', '&>*');
+      addVariant('in','&_')
     })
   ],
 };

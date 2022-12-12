@@ -1,24 +1,20 @@
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/Home/Home";
+import { Login } from "./pages/Login/Login";
 import AppBar from "./assets/components/AppBar/AppBar";
-import Sbar_item from "./assets/components/Sbar_item/Sbar_item";
+import { Layout } from "./pages/Layout";
 
 function App() {
-  const items: { href: string; title: string, icon: string }[] = [
-    { href: "/", title: "home",icon:"🏠" },
-    { href: "/", title: "profile", icon:"🕺" },
-    { href: "/", title: "setting", icon:"⚙️" },
-  ];
   return (
-    <>
-      <AppBar>jj</AppBar>
-      <div className="fle">
-        <div className="flex flex-col p-3 mx-2 my-3 w-64">
-          {items.map((item, idx) => (
-            <Sbar_item href={item.href} title={item.title} icon={item.icon}/>
-          ))}
-        </div>
-        <main></main>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
