@@ -1,25 +1,47 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { login } from "../../firebase/auth";
+import { useAuth } from "../../firebase/Authentication";
+import { useNavigate, Link } from "react-router-dom";
 
 export function Login() {
   const labelClass: string = "grid grid-cols-[1fr_2fr] mb-3";
   const inputClass: string =
-    "border-b-2 border-solid border-gray-200 px-3 py-1 text-sm outline-0 focus:border-blue-500";
+    "border-b-2 border-solid border-gray-200 px-3 py-2 text-sm outline-0 focus:border-blue-500 autofill:border-blue-300";
+  const navigation = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const { dispatch } = useAuth();
 
-  //TODO: パスワード条件を作成する。以下を条件とする。
-  //   - 少なくとも13文字以上のパスワード
-  //   - 大文字のアルファベットを含む
-  //   - 二つ以上の記号を含む
+  const changeHdler = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-  const passwordRole: RegExp = /[f]/;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const submitHdler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await login(form.email, form.password);
+      dispatch({ type: "login" });
+      navigation("/");
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <main id="login" className="grid items-center h-screen p-5">
       <form
-        action=""
-        method="get"
+        onSubmit={(e) => submitHdler(e)}
         className="flex flex-col py-8 px-6 m-auto max-w-xl md:px-12 rounded-lg my-6 w-full bg-white shadow-sm border-1.5 border-gray-300"
       >
-        <h1 className="text-5xl mb-8">Login</h1>
+        <h1 className="text-5xl mb-8">Login: {}</h1>
         <div className="my-4">
           <div className={labelClass}>
             <label htmlFor="email" className="mr-4">
@@ -32,6 +54,8 @@ export function Login() {
               className={inputClass}
               required
               name="email"
+              onChange={(e) => changeHdler(e)}
+              value={form.email}
               autoFocus
             />
           </div>
@@ -45,16 +69,17 @@ export function Login() {
               placeholder="password"
               className={inputClass}
               name="password"
+              onChange={(e) => changeHdler(e)}
+              value={form.password}
               required
             />
           </div>
         </div>
-        <button
+        <input
           type="submit"
           className="bg-slate-200 active:bg-slate-300 p-3 my-3 mx-8 rounded-md"
-        >
-          Login
-        </button>
+          value="Login"
+        />
       </form>
     </main>
   );

@@ -1,6 +1,4 @@
-import { Firebase_auth } from "../../firebase/firebase.config";
 import { Btn } from "../../assets/components/Button/Button";
-const user = Firebase_auth.currentUser;
 
 export function Home() {
   return (
