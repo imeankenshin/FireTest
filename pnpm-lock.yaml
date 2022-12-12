@@ -9,6 +9,7 @@ specifiers:
   firebase: ^9.14.0
   postcss: ^8.4.19
   prettier: ^2.7.1
+  prettier-plugin-tailwind: ^2.2.12
   prettier-plugin-tailwindcss: ^0.1.13
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -31,6 +32,7 @@ devDependencies:
   autoprefixer: 10.4.13_postcss@8.4.19
   postcss: 8.4.19
   prettier: 2.7.1
+  prettier-plugin-tailwind: 2.2.12_kan6xtblaklfz37vvv3gfaotoe
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
   tailwindcss: 3.2.0_postcss@8.4.19
   typescript: 4.9.3
@@ -1460,6 +1462,14 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
+  /find-up/5.0.0:
+    resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
+    engines: {node: '>=10'}
+    dependencies:
+      locate-path: 6.0.0
+      path-exists: 4.0.0
+    dev: true
+
   /firebase/9.14.0:
     resolution: {integrity: sha512-wePrsf7W33mhT7RVXQavragoAgXb/NDm22vuhwJXkprrQ2Y9alrEKC5LTAtLJL3P2dHdDmeylS6PLZwWPEE79A==}
     dependencies:
@@ -1664,6 +1674,13 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /locate-path/6.0.0:
+    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
+    engines: {node: '>=10'}
+    dependencies:
+      p-locate: 5.0.0
+    dev: true
+
   /lodash.camelcase/4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
     dev: false
@@ -1760,9 +1777,28 @@ packages:
       wrappy: 1.0.2
     dev: false
 
+  /p-limit/3.1.0:
+    resolution: {integrity: sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      yocto-queue: 0.1.0
+    dev: true
+
+  /p-locate/5.0.0:
+    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
+    engines: {node: '>=10'}
+    dependencies:
+      p-limit: 3.1.0
+    dev: true
+
   /pako/1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
     dev: false
+
+  /path-exists/4.0.0:
+    resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
+    engines: {node: '>=8'}
+    dev: true
 
   /path-is-absolute/1.0.1:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
@@ -1855,6 +1891,17 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
+
+  /prettier-plugin-tailwind/2.2.12_kan6xtblaklfz37vvv3gfaotoe:
+    resolution: {integrity: sha512-2SvZxpsYme0g5MrxGsKM43rx28f9AVlJrbwMnx4a03svCfsHwVGtcN6oN1YlClnEwZbquu3IhVAMcawEMKTjuA==}
+    peerDependencies:
+      prettier: ^2.0.0
+      tailwindcss: '*'
+    dependencies:
+      prettier: 2.7.1
+      tailwind-classes-sorter: 0.2.5
+      tailwindcss: 3.2.0_postcss@8.4.19
     dev: true
 
   /prettier-plugin-tailwindcss/0.1.13_prettier@2.7.1:
@@ -2112,6 +2159,12 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /tailwind-classes-sorter/0.2.5:
+    resolution: {integrity: sha512-7S0AaDitt+Fjy9m3v0GrQ/KZrCswNDD25SSXX9U/HIB5h9lk0ImSkq/VVcnzu78cRQxR0fFfvHYFdfcqN3dCGA==}
+    dependencies:
+      find-up: 5.0.0
+    dev: true
+
   /tailwindcss/3.2.0_postcss@8.4.19:
     resolution: {integrity: sha512-ARh/W0uH5UlWIC2nn02V0+5fyF0k6qZliyt4QYic2upOhPUE/Spu1EURNc9txJ3+4j8OEmdigqfDpw4d2tA4vA==}
     engines: {node: '>=12.13.0'}
@@ -2308,3 +2361,8 @@ packages:
       y18n: 5.0.8
       yargs-parser: 20.2.9
     dev: false
+
+  /yocto-queue/0.1.0:
+    resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
+    engines: {node: '>=10'}
+    dev: true

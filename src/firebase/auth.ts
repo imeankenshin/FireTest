@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import { useReducer } from "react";
 
@@ -36,7 +37,7 @@ export async function singup(email: string, password: string) {
 export async function currentUser() {
   try {
     // クライアントが保持しているログイン状態が有効であれば、ユーザーの認証情報が返される
-    const user = await new Promise((res, rej) => {
+    const user: User = await new Promise((res, rej) => {
       onAuthStateChanged(Firebase_auth, (user) => {
         if (user) {
           res(user);

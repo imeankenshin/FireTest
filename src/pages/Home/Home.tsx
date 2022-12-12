@@ -1,6 +1,13 @@
 import { Btn } from "../../assets/components/Button/Button";
+import { useAuth } from "../../firebase/Authentication";
+import { currentUser } from "../../firebase/auth";
+import { User } from "firebase/auth";
+
+const user: Promise<User | undefined> = currentUser();
 
 export function Home() {
+  console.log(user.then());
+
   return (
     <main className="flex justify-center h-screen items-center">
       <section className="w-full">
@@ -29,11 +36,8 @@ export function Home() {
           {/* Welcome menu */}
           <div className="border-2 shadow-md sm:col-span-1 lg:col-span-3 border-solid flex flex-col justify-between border-neutral-200 p-6 sm:mx-3 rounded-md">
             <div>
-              <h2 className=" font-semibold text-3xl mb-6">مرحبا المستخدم!</h2>
-              <p>
-                مرحبًا بك في لوحة التحكم الخاصة بك ، والتي يمكنها الوصول إلى
-                المحادثة أو المجتمعات وإظهار نفسك!
-              </p>
+              <h2 className=" font-semibold text-3xl mb-6">Hello, user!</h2>
+              <p>إذا كنت تقرأ هذا ، فقد قمت بترجمة جوجل ، أليس كذلك؟</p>
             </div>
             <div className="child:mt-3 md:child:mt-0 md:grid contents sm:grid-cols-2">
               <Btn>Start Random Talkin'</Btn>
