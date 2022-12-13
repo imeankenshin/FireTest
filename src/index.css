@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 :root {
-  font-family: Roboto, "SF Arabic";
+  font-family: Roboto, "SF Arabic", "SF Pro";
 }

@@ -31,7 +31,7 @@ export function Login() {
       dispatch({ type: "login" });
       navigation("/");
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
