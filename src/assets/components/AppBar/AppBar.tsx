@@ -1,6 +1,3 @@
-import React from "react";
-import { useState } from "react";
-
 export default function AppBar(props: any): JSX.Element {
   return (
     <header>
@@ -11,3 +8,4 @@ export default function AppBar(props: any): JSX.Element {
     </header>
   );
 }
+

@@ -1,7 +1,6 @@
 import { useContext, useReducer, createContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { currentUser } from "./auth";
-import React from "react";
 
 // 認証状態を管理するためのコンテキストを作成
 const AuthenticationContext: React.Context<undefined | any> =
