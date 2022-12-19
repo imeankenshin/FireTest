@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
-import AppBar from "./assets/components/AppBar/AppBar";
 import { Layout } from "./pages/Layout";
 import { AuthProvider } from "./firebase/Authentication";
+import { Logout } from "./pages/Logout/Logout";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
             <Route path="" element={<Home />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

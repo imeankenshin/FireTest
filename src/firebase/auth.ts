@@ -56,3 +56,5 @@ export async function currentUser() {
 export async function logout() {
   return await Firebase_auth.signOut();
 }
+
+export const user: User | undefined = await currentUser();
