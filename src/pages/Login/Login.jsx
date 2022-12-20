@@ -24,12 +24,12 @@ export function Login() {
   };
 
   return (
-    <main id="login" className="grid items-center h-screen p-5">
+    <main id="login" className="grid h-screen items-center p-5">
       <form
         onSubmit={(e) => submitHdler(e)}
-        className="flex flex-col py-8 px-6 m-auto max-w-xl md:px-12 rounded-lg my-6 w-full bg-white border-2 shadow-md border-gray-300"
+        className="m-auto my-6 flex w-full max-w-xl flex-col rounded-lg border-2 border-gray-300 bg-white py-8 px-6 shadow-md md:px-12"
       >
-        <h1 className="text-5xl mb-8">Login: {}</h1>
+        <h1 className="mb-8 text-5xl">Login: {}</h1>
         <div className="my-4">
           <div className={labelClass}>
             <label htmlFor="email" className="mr-4">
@@ -63,7 +63,7 @@ export function Login() {
         </div>
         <input
           type="submit"
-          className="bg-slate-200 active:bg-slate-300 p-3 my-3 mx-8 rounded-md"
+          className="my-3 mx-8 rounded-md bg-slate-200 p-3 active:bg-slate-300"
           value="Login"
         />
         <p>

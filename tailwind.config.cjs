@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -10,15 +10,16 @@ module.exports = {
         1.5: "1.5px",
       },
       aspectRatio: {
-        "rect": "2 / 1",
-        "4/3": "4 / 3"
+        rect: "2 / 1",
+        "4/3": "4 / 3",
       },
     },
   },
-  plugins: [require('@tailwindcss/container-queries'),
-    plugin(function({ addVariant }) {
-      addVariant('child', '&>*');
-      addVariant('in','&_')
-    })
+  plugins: [
+    require("@tailwindcss/container-queries"),
+    plugin(function ({ addVariant }) {
+      addVariant("child", "&>*");
+      addVariant("in", "&_");
+    }),
   ],
 };

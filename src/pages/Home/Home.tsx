@@ -11,8 +11,8 @@ export function Home() {
   console.log(user);
 
   return (
-    <main className="flex w-full justify-center h-screen items-center">
-      <div className="flex mx-6 md:m-0 place-items-center">
+    <main className="flex h-screen w-full items-center justify-center">
+      <div className="mx-6 flex place-items-center md:m-0">
         <Profile />
         {/* Welcome menu */}
         <WelcomeMenu login={user != undefined} />
