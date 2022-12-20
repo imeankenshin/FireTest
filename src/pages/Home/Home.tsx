@@ -13,8 +13,7 @@ export function Home() {
   return (
     <main className="flex justify-center h-screen items-center">
       <section className="w-full">
-        <div className="grid mx-6 md:m-0 sm:grid-cols-2 lg:grid-cols-5">
-          <Profile userName={user?.displayName} email={user?.email} />
+        <div className="grid mx-6 md:m-0 place-items-center">
           {/* Welcome menu */}
           <WelcomeMenu login={user != undefined} />
         </div>

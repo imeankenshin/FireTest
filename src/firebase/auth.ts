@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   User,
 } from "firebase/auth";
-import { useReducer } from "react";
 
 export async function login(email: string, password: string) {
   try {
@@ -51,7 +50,6 @@ export async function currentUser() {
     return undefined;
   }
 }
-
 // ログアウト処理
 export async function logout() {
   return await Firebase_auth.signOut();

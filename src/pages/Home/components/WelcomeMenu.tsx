@@ -1,4 +1,6 @@
 import { Btn } from "../../../assets/components/Button/Button";
+import { user } from "../../../firebase/auth";
+import { Link } from "react-router-dom";
 
 interface WelcomeMenu {
   login: boolean;
@@ -6,9 +8,11 @@ interface WelcomeMenu {
 
 export default function WelcomeMenu(props: WelcomeMenu) {
   return (
-    <div className="border-2 shadow-md sm:col-span-1 lg:col-span-3 border-solid flex flex-col justify-between border-neutral-200 p-6 sm:mx-3 rounded-md">
+    <div className="border-2 transition-all shadow-md min-h-[18rem] border-solid flex flex-col justify-between border-neutral-200 p-6 sm:mx-3 rounded-md">
       <div>
-        <h2 className=" font-semibold text-3xl mb-6">Hello, user!</h2>
+        <h2 className=" font-semibold text-3xl mb-6">
+          Hello, {user != undefined ? user.displayName : `new one`}!
+        </h2>
         <p>إذا كنت تقرأ هذا ، فقد قمت بترجمة جوجل ، أليس كذلك؟</p>
       </div>
       <div className="child:mt-3 md:child:mt-0 grid md:grid-cols-2">
@@ -18,7 +22,7 @@ export default function WelcomeMenu(props: WelcomeMenu) {
             <Btn>Search Comunities</Btn>
           </>
         ) : (
-          <a href="/login">login</a>
+          <Link to="/login">login</Link>
         )}
       </div>
     </div>
