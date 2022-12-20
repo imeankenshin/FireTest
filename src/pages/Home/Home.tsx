@@ -11,13 +11,12 @@ export function Home() {
   console.log(user);
 
   return (
-    <main className="flex justify-center h-screen items-center">
-      <section className="w-full">
-        <div className="grid mx-6 md:m-0 place-items-center">
-          {/* Welcome menu */}
-          <WelcomeMenu login={user != undefined} />
-        </div>
-      </section>
+    <main className="flex w-full justify-center h-screen items-center">
+      <div className="flex mx-6 md:m-0 place-items-center">
+        <Profile />
+        {/* Welcome menu */}
+        <WelcomeMenu login={user != undefined} />
+      </div>
     </main>
   );
 }
