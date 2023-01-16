@@ -3,9 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { Signin } from "./pages/Signin/SignIn";
+import { Dialog } from "./assets/components/Dialog/Dialog";
 import { Layout } from "./pages/Layout";
 import { AuthProvider } from "./firebase/Authentication";
 import { Logout } from "./pages/Logout/Logout";
+
+export function openDialog() {}
 
 function App() {
   return (
