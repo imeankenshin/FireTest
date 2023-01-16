@@ -2,24 +2,29 @@ import { useRef } from "react";
 import { login } from "../../firebase/auth";
 import { useAuth } from "../../firebase/Authentication";
 import { useNavigate, Link } from "react-router-dom";
+import { Btn } from "../../assets/components/Button/Button";
+import { useState } from "react";
 
 export function Login() {
   const labelClass = "grid grid-cols-[1fr_2fr] mb-3";
   const inputClass =
     "border-b-2 border-solid border-gray-200 px-3 py-2 text-sm outline-0 focus:border-blue-500 autofill:border-blue-300";
+  const [isLogging, setLogging] = useState(false);
   const navigation = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
   const { dispatch } = useAuth();
 
   const submitHdler = async (e) => {
+    setLogging(true);
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
       dispatch({ type: "login" });
       navigation("/");
     } catch (e) {
-      console.log(e);
+      alert(e);
+      setLogging(false);
     }
   };
 
@@ -27,9 +32,9 @@ export function Login() {
     <main id="login" className="grid h-screen items-center p-5">
       <form
         onSubmit={(e) => submitHdler(e)}
-        className="m-auto my-6 flex w-full max-w-xl flex-col rounded-lg border-2 border-gray-300 bg-white py-8 px-6 shadow-md md:px-12"
+        className="m-auto my-6 flex w-full max-w-xl flex-col rounded-lg bg-slate-800 py-8 px-6 shadow-md md:px-12"
       >
-        <h1 className="mb-8 text-5xl">Login: {}</h1>
+        <h1 className="mb-8 text-5xl font-medium">Login</h1>
         <div className="my-4">
           <div className={labelClass}>
             <label htmlFor="email" className="mr-4">
@@ -61,11 +66,7 @@ export function Login() {
             />
           </div>
         </div>
-        <input
-          type="submit"
-          className="my-3 mx-8 rounded-md bg-slate-200 p-3 active:bg-slate-300"
-          value="Login"
-        />
+        <Btn type="submit">{isLogging ? "Loading..." : "Login"}</Btn>
         <p>
           if you not have an account yet, <Link to="/signin">click here</Link>{" "}
           to signup.

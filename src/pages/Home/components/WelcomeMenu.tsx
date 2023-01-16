@@ -8,7 +8,7 @@ interface WelcomeMenu {
 
 export default function WelcomeMenu(props: WelcomeMenu) {
   return (
-    <div className="flex min-h-[18rem] flex-col justify-between rounded-md border-2 border-solid border-neutral-200 p-6 shadow-md transition-all sm:mx-3">
+    <div className="flex min-h-[18rem] flex-col justify-between rounded-md bg-slate-800 p-6 shadow-md transition-all sm:mx-3">
       <div>
         <h2 className=" mb-6 text-3xl font-semibold">
           Hello, {user != undefined ? user.displayName : `new one`}!
@@ -18,7 +18,13 @@ export default function WelcomeMenu(props: WelcomeMenu) {
       <div className="grid child:mt-3 md:grid-cols-2 md:child:mt-0">
         {props.login ? (
           <>
-            <Btn>Start Random Talkin'</Btn>
+            <Btn
+              onClick={(e) => {
+                console.log(e);
+              }}
+            >
+              Start Random Talkin'
+            </Btn>
             <Btn>Search Comunities</Btn>
           </>
         ) : (

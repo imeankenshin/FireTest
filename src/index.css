@@ -5,3 +5,11 @@
 :root {
   font-family: Roboto, "SF Arabic", "SF Pro";
 }
+@layer base {
+  :root {
+    @apply text-white;
+  }
+  html {
+    @apply bg-slate-700;
+  }
+}
