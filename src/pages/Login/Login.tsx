@@ -8,7 +8,7 @@ import { useState } from "react";
 export function Login() {
   const labelClass = "grid grid-cols-[1fr_2fr] mb-3";
   const inputClass =
-    "border-b-2 border-solid border-gray-200 px-3 py-2 text-sm outline-0 focus:border-blue-500 autofill:border-blue-300";
+    "border-b-2 border-solid bg-opacity-0 bg-black border-gray-200 px-3 py-2 text-sm outline-0 focus:border-blue-500 autofill:border-blue-300";
   const [isLogging, setLogging] = useState(false);
   const navigation = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -68,7 +68,9 @@ export function Login() {
             />
           </div>
         </div>
-        <Btn type="submit">{isLogging ? "Loading..." : "Login"}</Btn>
+        <div className="mx-6 mb-4 grid min-w-fit">
+          <Btn type="submit">{isLogging ? "Loading..." : "Login"}</Btn>
+        </div>
         <p>
           if you not have an account yet, <Link to="/signin">click here</Link>{" "}
           to signup.
