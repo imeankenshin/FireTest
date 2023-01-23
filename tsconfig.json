@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "baseUrl": "./",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -14,8 +15,22 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@fb/*": ["./src/firebase/*"],
+      "@assets/*": ["./src/assets/*"],
+      "~/*": ["./*"]
+    }
   },
-  "include": ["src", "assets"],
+  "include": [
+    "./vite.config.ts",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.jsx",
+    "./src/**/*.ts",
+    "./tests/**/*.js",
+    "./tests/**/*.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

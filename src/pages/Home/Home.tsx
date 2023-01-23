@@ -1,16 +1,16 @@
 import { Btn } from "../../assets/components/Button/Button";
-import { useAuth } from "../../firebase/Authentication";
-import { currentUser } from "../../firebase/auth";
+import { currentUser } from "@fb/auth";
 import { User } from "firebase/auth";
 import Profile from "./components/Profile";
 import WelcomeMenu from "./components/WelcomeMenu";
-import { Dialog } from "../../assets/components/Dialog/Dialog";
+import { Dialog } from "@assets/components/Dialog/Dialog";
+import { createUser, fetchStore } from "@fb/storage";
 
 const user: User | undefined = await currentUser();
 
 export function Home() {
   console.log(user);
-
+  fetchStore();
   return (
     <main className="flex h-screen w-full items-center justify-center">
       <div className="mx-6 flex place-items-center md:m-0">
@@ -33,7 +33,7 @@ export function Home() {
               <li>third</li>
               <li>forth</li>
             </ul>
-            <button onClick={() => alert("null")}>this</button>
+            <Btn>hello wolrd</Btn>
           </div>
         </Dialog>
       </div>
