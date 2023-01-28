@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		font-family: Roboto, 'Noto Sans';
+		@apply text-white;
+	}
+	a {
+		@apply font-medium text-sky-400 outline-none hover:underline focus:underline;
+	}
+	h1 {
+		@apply text-5xl font-semibold;
+	}
+	h2 {
+		@apply text-3xl font-semibold;
+	}
+}
