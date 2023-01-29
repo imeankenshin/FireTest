@@ -1,11 +1,12 @@
 import { Link } from '@remix-run/react';
 import { useContext } from 'react';
 import { FirebaseContext } from '~/firebase/authorization';
+import Btn from '~/lib/components/Button/Button';
 
 export default function Index() {
 	const user = useContext(FirebaseContext);
 	return (
-		<main className="grid md:grid-cols-2">
+		<main className="grid h-full md:grid-cols-2">
 			<div className="p-12">
 				<h1>Hello, {user.profile ? `${user.profile.displayName}` : 'new one!'}!</h1>
 				<p className="m-4">
@@ -18,7 +19,7 @@ export default function Index() {
 					<Link to="/signup">Sign up</Link>
 				</div>
 			</div>
-			<div className="grid place-items-center px-12 text-white max-md:hidden">
+			<div className="grid place-items-center content-center px-12 text-white max-md:hidden">
 				<div className="w-full max-w-sm rounded-lg bg-slate-800 p-4">
 					<div className="flex aspect-[2/1] items-end justify-between rounded bg-lime-500 p-6 pb-0 pl-4">
 						<div className="absolute -mb-5 grid h-16 w-16 place-items-center rounded-2xl border-[6px] border-slate-800 bg-slate-400">
@@ -44,6 +45,7 @@ export default function Index() {
 						<p>{user.store ? user.store.introduce : 'no introduce'}</p>
 					</div>
 				</div>
+				<Btn>Edit my profile</Btn>
 			</div>
 		</main>
 	);

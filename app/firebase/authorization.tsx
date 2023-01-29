@@ -37,11 +37,11 @@ export function AuthContextProvider(props: any) {
 	return (
 		<FirebaseContext.Provider value={{ profile: user, store: store }}>
 			{isLoading && (
-				<main className="grid min-h-screen place-items-center">
+				<main className="grid h-screen place-items-center">
 					<h1>Loading...</h1>
 				</main>
 			)}
-			<div className={isLoading ? 'hidden' : ''}>{props.children}</div>
+			<div className={`${isLoading ? 'hidden' : ''} flex h-screen flex-col`}>{props.children}</div>
 		</FirebaseContext.Provider>
 	);
 }

@@ -17,16 +17,14 @@ export default function Index() {
 		event.preventDefault();
 		if (emailRef.current && passwordRef.current && nameRef.current) {
 			setLoading(true);
-			await SignUp(nameRef.current.value, emailRef.current.value, passwordRef.current.value)
-				.then(() => {
-					navigate('/');
-				})
-				.catch((err) => {
-					console.error(err);
-				})
-				.finally(() => {
+			await SignUp(nameRef.current.value, emailRef.current.value, passwordRef.current.value).then(
+				(res) => {
+					if (res) {
+						navigate('/');
+					}
 					setLoading(false);
-				});
+				}
+			);
 		}
 	}
 	return (
@@ -68,9 +66,6 @@ export default function Index() {
 						label="password"
 						name="password"
 					/>
-					<a href="./" className="my-2">
-						Forgot your password?
-					</a>
 					<div className="mt-2 mb-3 grid">
 						<Btn type="submit">{loading ? 'wait...' : 'Sign up'}</Btn>
 					</div>
