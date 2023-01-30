@@ -1,4 +1,4 @@
-import { Form, useNavigate } from '@remix-run/react';
+import { Form, Link, useNavigate } from '@remix-run/react';
 import React, { useRef, useState } from 'react';
 import { SignIn } from '~/firebase/auth';
 import Btn from '~/lib/components/Button/Button';
@@ -66,7 +66,7 @@ export default function Index() {
 						<Btn type="submit">{loading ? 'wait...' : 'Sign in'}</Btn>
 					</div>
 					<p>
-						If you don't have an account yet, <a href="./Signup">just click here to sign up</a>
+						If you don't have an account yet, <Link to="/signup">just click here to sign up</Link>
 					</p>
 				</div>
 				<div className="-mr col-span-2 mx-4 -mr-4 flex flex-col items-center justify-center py-2 max-lg:hidden">

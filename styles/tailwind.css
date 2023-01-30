@@ -4,7 +4,7 @@
 
 @layer base {
 	:root {
-		font-family: Roboto, 'Noto Sans';
+		font-family: Roboto, 'Noto Sans', 'SF Pro';
 		@apply text-white;
 	}
 	a {
