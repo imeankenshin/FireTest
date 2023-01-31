@@ -1,4 +1,4 @@
-import { Form, Link, useLocation, useNavigate } from '@remix-run/react';
+import { Form, Link, useNavigate } from '@remix-run/react';
 import React, { useRef, useState } from 'react';
 import { SignIn } from '~/firebase/auth';
 import Btn from '~/lib/components/Button/Button';

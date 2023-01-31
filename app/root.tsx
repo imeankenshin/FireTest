@@ -2,6 +2,7 @@ import type { MetaFunction, LinksFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import { AuthContextProvider } from './firebase/authorization';
 import { HeaderNav } from './layout/HeaderNav';
+import { Notificate } from './lib/components/Toast/Toast';
 import styles from './tailwind.css';
 
 export const meta: MetaFunction = () => ({
@@ -13,6 +14,8 @@ export const meta: MetaFunction = () => ({
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export default function App() {
+	const reminder = new Notificate('tr');
+	reminder.log('hello wolrd');
 	return (
 		<html lang="en" className="html">
 			<head>
@@ -21,6 +24,7 @@ export default function App() {
 			</head>
 			<body className="min-h-screen overflow-hidden bg-slate-700">
 				<AuthContextProvider>
+					<reminder.element />
 					<HeaderNav />
 					<Outlet />
 					<ScrollRestoration />
