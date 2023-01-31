@@ -1,4 +1,4 @@
-import { Form, Link, useNavigate } from '@remix-run/react';
+import { Form, Link, useLocation, useNavigate } from '@remix-run/react';
 import React, { useRef, useState } from 'react';
 import { SignIn } from '~/firebase/auth';
 import Btn from '~/lib/components/Button/Button';
@@ -9,6 +9,7 @@ export default function Index() {
 	const [emailRef, passwordRef] = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	// Func
 	async function submitHdler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (emailRef.current && passwordRef.current) {
@@ -63,7 +64,9 @@ export default function Index() {
 						Forgot your password?
 					</a>
 					<div className="mt-2 mb-3 grid">
-						<Btn type="submit">{loading ? 'wait...' : 'Sign in'}</Btn>
+						<Btn size="md" type="submit">
+							{loading ? 'wait...' : 'Sign in'}
+						</Btn>
 					</div>
 					<p>
 						If you don't have an account yet, <Link to="/signup">just click here to sign up</Link>

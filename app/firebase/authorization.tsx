@@ -2,13 +2,18 @@ import type { User } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import type { DocumentData } from 'firebase/firestore';
 import { doc, getDoc } from 'firebase/firestore';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { auth, db } from './firebase.config';
 
-export const FirebaseContext = createContext<AuthProvider>({
+const FirebaseContext = createContext<AuthProvider>({
 	profile: null,
 	store: undefined
 });
+
+export const useAuth = () => {
+	const res = useContext(FirebaseContext);
+	return res;
+};
 
 type AuthProvider = {
 	profile: User | null;

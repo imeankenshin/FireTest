@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react';
+import { Link, useLocation } from '@remix-run/react';
 import { useAuth } from '~/firebase/authorization';
 import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 
@@ -48,7 +48,8 @@ export default function Index() {
 			{usr.profile ? (
 				<div className="h-full w-full overflow-y-scroll p-12 scroll:bg-transparent scroll-tb:bg-slate-300/60">
 					<h1>User account</h1>
-					<ul className="max-w-lg [&>li]:my-3">
+					<h2 className="border-b-2 border-gray-400/60 ">Profile</h2>
+					<ul className="max-w-lg [&>li]:my-2">
 						<li>
 							<TxtInput
 								name="name"
@@ -61,7 +62,7 @@ export default function Index() {
 							<TxtInput name="introduce" type="text" label="introduce" />
 						</li>
 						<li>
-							<TxtInput name="some" type="time" label="time" />
+							<TxtInput name="some" type="text" label="time" />
 						</li>
 					</ul>
 				</div>
