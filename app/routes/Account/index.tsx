@@ -5,14 +5,13 @@ import React, { useRef } from 'react';
 import { useAuth } from '~/firebase/authorization';
 import { db } from '~/firebase/firebase.config';
 import Btn from '~/lib/components/Button/Button';
-import { Toast } from '~/lib/components/Toast/Toast';
 import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 
 export default function Index() {
+	const navigate = useNavigate();
 	const usr = useAuth();
 	const usrStore = usr.store;
 	const usrProfile = usr.profile;
-	const navigate = useNavigate();
 	//Refs
 	const nameRef = useRef<HTMLInputElement>(null);
 	const introduceRef = useRef<HTMLInputElement>(null);
@@ -93,7 +92,7 @@ export default function Index() {
 						<ul className="max-w-lg [&>li]:my-2">
 							<li>
 								<TxtInput
-									refs={nameRef}
+									inputRef={nameRef}
 									minLength={3}
 									maxLength={15}
 									id="name"
@@ -106,10 +105,11 @@ export default function Index() {
 							<li>
 								<TxtInput
 									id="introduce"
-									refs={introduceRef}
+									inputRef={introduceRef}
+									minLength={1}
 									maxLength={150}
 									name="introduce"
-									resizable="none"
+									resizable="y"
 									rows={4}
 									placeholder={usrStore ? usrStore.introduce : 'null'}
 									type="multiline"
@@ -123,7 +123,7 @@ export default function Index() {
 					</form>
 				</div>
 			) : (
-				<h1>first login</h1>
+				<div>hello</div>
 			)}
 		</main>
 	);
