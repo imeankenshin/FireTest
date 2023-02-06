@@ -1,26 +1,50 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { render } from 'react-dom';
 
 type V2ToastComponent = {
 	children: React.ReactNode;
-	status: 'log' | 'info' | 'error' | 'alert';
+	status: 'log' | 'info' | 'error' | 'warn' | 'success';
+	transition?: 'left' | 'right' | 'top' | 'bottom';
 	title?: string;
-	ms?: number;
+	s?: number;
 	color?: 'black' | 'light';
+	icon?: React.ReactNode;
+	// functions
+	onClick?: React.MouseEventHandler<HTMLDivElement>;
+	onClose?: (()=>void)|void;
 };
-
+/** This is a Voyager2's component for notice.
+ *@param children the content of this component
+ */
 export function Toast(props: V2ToastComponent) {
 	const colorPicker = () => {
 		switch (props.status) {
-			case 'alert':
+			case 'warn':
 				return ['bg-yellow-100 text-yellow-900', 'text-yellow-600', 'hover:bg-yellow-500/50'];
 			case 'error':
 				return ['bg-red-100 text-red-900', 'text-red-600', 'hover:bg-red-500/50'];
 			case 'info':
 				return ['bg-sky-100 text-sky-900', 'text-sky-600', 'hover:bg-sky-500/50'];
+			case 'success':
+				return ['bg-lime-100 text-lime-900', 'text-lime-600', 'hover:bg-lime-500/50'];
 			case 'log':
-				return ['bg-lime-100 text-lime-900', 'text-lime-600', 'hover:bg-lime-500/50'];
+				return ['bg-gray-100 text-gray-900', 'text-gray-600', 'hover:bg-gray-500/50'];
 			default:
-				return ['bg-lime-100 text-lime-900', 'text-lime-600', 'hover:bg-lime-500/50'];
+				return ['bg-gray-100 text-gray-900', 'text-gray-600', 'hover:bg-gray-500/50'];
+		}
+	};
+	const transitionPicker = () => {
+		switch (props.transition) {
+			case 'bottom':
+				return 'translate-y-7';
+			case 'top':
+				return '-translate-y-7';
+			case 'left':
+				return '-translate-x-12';
+			case 'right':
+				return 'translate-x-12';
+			default:
+				return 'translate-y-7';
 		}
 	};
 	// states
@@ -33,31 +57,40 @@ export function Toast(props: V2ToastComponent) {
 		setDefined(false);
 		setTimeout(() => {
 			setExist(false);
-		}, 500);
+			if(props.onClose){
+				props.onClose();
+			}
+		}, 200);
 	};
 	useEffect(() => {
 		setExist(true);
 		setTimeout(() => {
 			setDefined(true);
-		}, 0);
-		if (props.ms) {
+		}, 10);
+		if (props.s) {
 			setTimeout(() => {
 				deleteThis();
-			}, props.ms);
+			}, props.s * 1000);
 		}
-	}, [props.ms]);
+	}, [props.s]);
 	return (
 		<>
 			{exist ? (
 				<div
+					role="alert"
+					onClick={props.onClick}
 					ref={toastRef}
-					className={`pointer-events-auto mb-4 flex w-full max-w-md justify-between ${
-						defined ? 'ease-out' : 'translate-y-10 opacity-0 ease-in'
-					} duration-400  rounded-lg ${colorPicker()[0]} p-3 transition-all`}
+					className={`pointer-events-auto mb-4 flex w-full max-w-md ${
+						props.onClick && 'cursor-pointer'
+					} justify-between ${
+						defined
+							? 'ease-out'
+							: transitionPicker() + ' pointer-events-none -mt-[4.25rem] opacity-0 ease-in'
+					} rounded-lg duration-200 ${colorPicker()[0]} p-3 transition-all`}
 				>
 					<div className="flex">
 						<span className={`h-7 w-7 select-none text-center text-xl ${colorPicker()[1]} `}>
-							􀿌
+							{props.icon ? props.icon : '􀿌'}
 						</span>
 						<div className="mx-2.5">
 							<span className={`flex items-center text-lg font-medium`}>{props.title}</span>
@@ -76,72 +109,10 @@ export function Toast(props: V2ToastComponent) {
 	);
 }
 
-export class Notificate {
-	// variables
-	position: 'tr' | 'tl' | 'br' | 'bl' = 'tr';
-
-	content: JSX.Element[] = [];
-
-	constructor(position: 'tr' | 'tl' | 'br' | 'bl') {
-		this.position = position;
-	}
-	// functions
-	log(message: React.ReactNode, title?: string) {
-		this.content.push(
-			<Toast status="log" title={title}>
-				{message}
-			</Toast>
-		);
-	}
-
-	alert(message: React.ReactNode, title?: string) {
-		this.content.push(
-			<Toast status="alert" title={title}>
-				{message}
-			</Toast>
-		);
-	}
-
-	error(message: React.ReactNode, title?: string) {
-		this.content.push(
-			<Toast status="error" title={title}>
-				{message}
-			</Toast>
-		);
-	}
-
-	info(message: React.ReactNode, title?: string) {
-		this.content.push(
-			<Toast status="info" title={title}>
-				{message}
-			</Toast>
-		);
-	}
-	// return a notification center
-	element(): JSX.Element {
-		const pos: string = 'tr';
-		const getToastPosition = () => {
-			switch (pos) {
-				case 'bl':
-					return ['justify-end items-start', 'bottom-0 left-0'];
-				case 'br':
-					return ['justify-end items-end', 'bottom-0 right-0'];
-				case 'tl':
-					return ['justify-start items-start', 'top-0 left-0'];
-				case 'tr':
-					return ['justify-start items-end', 'top-0 right-0'];
-				default:
-					return ['justify-start items-end', 'top-0 left-0'];
-			}
-		};
-		return (
-			<div
-				className={`${getToastPosition()[0]} pointer-events-none fixed ${
-					getToastPosition()[1]
-				} z-40 flex h-full w-full flex-col p-6`}
-			>
-				{this.content ? this.content : null}
-			</div>
-		);
-	}
+export function NotificationCenter(props: any): JSX.Element {
+	render(
+		<div className="pointer-events-none fixed bottom-0 right-0 z-50 flex h-screen w-full max-w-sm flex-col items-end justify-end p-8"></div>,
+		document.getElementById('root')
+	);
+	return <React.Fragment />;
 }

@@ -5,9 +5,11 @@ import React, { useRef } from 'react';
 import { useAuth } from '~/firebase/authorization';
 import { db } from '~/firebase/firebase.config';
 import Btn from '~/lib/components/Button/Button';
+import { useNotification } from '~/lib/components/Toast/Notification';
 import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 
 export default function Index() {
+	const notice = useNotification();
 	const navigate = useNavigate();
 	const usr = useAuth();
 	const nowLocate = useLocation().pathname;
@@ -133,6 +135,11 @@ export default function Index() {
 					<h1>You're not Signing in.</h1>
 					<p>You need to sign in with you account first.</p>
 					<Link to={'/signin?next=' + nowLocate}>click here to sing in!</Link>
+					<Btn onClick={() => { notice.log("hello wolrd"); } } type={'button'} size={'sm'}>Log</Btn>
+					<Btn onClick={() => { notice.info("information"); } } type={'button'} size={'sm'}>info</Btn>
+					<Btn onClick={() => { notice.warn("日本語で遊ぼう"); } } type={'button'} size={'sm'}>warn</Btn>
+					<Btn onClick={() => { notice.error("something went wrong."); } } type={'button'} size={'sm'}>error</Btn>
+					<Btn onClick={() => { notice.success("success login"); } } type={'button'} size={'sm'}>success</Btn>
 				</div>
 			)}
 		</main>
