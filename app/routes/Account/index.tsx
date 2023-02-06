@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@remix-run/react';
+import { Link, useLocation, useNavigate } from '@remix-run/react';
 import { updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useRef } from 'react';
@@ -10,11 +10,12 @@ import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 export default function Index() {
 	const navigate = useNavigate();
 	const usr = useAuth();
+	const nowLocate = useLocation().pathname;
 	const usrStore = usr.store;
 	const usrProfile = usr.profile;
 	//Refs
-	const nameRef = useRef<HTMLInputElement>(null);
-	const introduceRef = useRef<HTMLInputElement>(null);
+	const nameRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+	const introduceRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 	async function updateUserProfile(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (usrProfile && nameRef.current && introduceRef.current) {
@@ -37,6 +38,8 @@ export default function Index() {
 					console.error(err);
 					alert('something went wrong');
 				});
+		} else {
+			alert('et');
 		}
 	}
 	return (
@@ -93,6 +96,9 @@ export default function Index() {
 							<li>
 								<TxtInput
 									inputRef={nameRef}
+									onChange={(e) => {
+										console.log(e);
+									}}
 									minLength={3}
 									maxLength={15}
 									id="name"
@@ -123,7 +129,11 @@ export default function Index() {
 					</form>
 				</div>
 			) : (
-				<div>hello</div>
+				<div className="h-full w-full overflow-y-scroll p-12 scroll:bg-transparent scroll-tb:bg-slate-300/60">
+					<h1>You're not Signing in.</h1>
+					<p>You need to sign in with you account first.</p>
+					<Link to={'/signin?next=' + nowLocate}>click here to sing in!</Link>
+				</div>
 			)}
 		</main>
 	);

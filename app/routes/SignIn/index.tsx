@@ -1,4 +1,4 @@
-import { Form, Link, useNavigate } from '@remix-run/react';
+import { Form, Link, useLocation, useNavigate } from '@remix-run/react';
 import React, { useRef, useState } from 'react';
 import { SignIn } from '~/firebase/auth';
 import Btn from '~/lib/components/Button/Button';
@@ -6,9 +6,12 @@ import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 
 export default function Index() {
 	//Refs
-	const [emailRef, passwordRef] = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+	const [emailRef, passwordRef] = [useRef<HTMLInputElement & HTMLTextAreaElement>(null), useRef<HTMLInputElement & HTMLTextAreaElement>(null)];
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const locate = useLocation();
+	const query = new URLSearchParams(locate.search);
+
 	// Func
 	async function submitHdler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -16,14 +19,13 @@ export default function Index() {
 			setLoading(true);
 			await SignIn(emailRef.current.value, passwordRef.current.value)
 				.then((res) => {
-					if (res) {
-						navigate('/');
+					if (res[0]) {
+						navigate(`${query.get('next') ? query.get('next') : '/'}`);
 					} else {
-						alert('something went wrong');
+						if (res[1] == 'auth/user-not-found') {
+							alert('The email or password is wrong. try again!');
+						}
 					}
-				})
-				.catch((err) => {
-					console.error(err);
 				})
 				.finally(() => {
 					setLoading(false);
@@ -45,7 +47,7 @@ export default function Index() {
 					<p className="mb-2 opacity-60">Enter your email & password to sign in.</p>
 					<TxtInput
 						autoFocus
-						refs={emailRef}
+						inputRef={emailRef}
 						id="email"
 						required
 						type="email"
@@ -53,7 +55,7 @@ export default function Index() {
 						name="email"
 					/>
 					<TxtInput
-						refs={passwordRef}
+						inputRef={passwordRef}
 						required
 						id="pass"
 						type="password"

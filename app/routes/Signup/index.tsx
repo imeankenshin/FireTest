@@ -7,9 +7,9 @@ import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 export default function Index() {
 	//Refs
 	const [emailRef, passwordRef, nameRef] = [
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null)
+		useRef<HTMLInputElement & HTMLTextAreaElement>(null),
+		useRef<HTMLInputElement & HTMLTextAreaElement>(null),
+		useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 	];
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function Index() {
 					<p className="mb-2 opacity-60">Enter your email & password to sign in.</p>
 					<TxtInput
 						autoFocus
-						refs={nameRef}
+						inputRef={nameRef}
 						id="name"
 						required
 						type="text"
@@ -51,7 +51,7 @@ export default function Index() {
 					/>
 					<TxtInput
 						autoFocus
-						refs={emailRef}
+						inputRef={emailRef}
 						id="email"
 						required
 						type="email"
@@ -59,7 +59,7 @@ export default function Index() {
 						name="email"
 					/>
 					<TxtInput
-						refs={passwordRef}
+						inputRef={passwordRef}
 						required
 						id="pass"
 						type="password"
@@ -67,7 +67,9 @@ export default function Index() {
 						name="password"
 					/>
 					<div className="mt-2 mb-3 grid">
-						<Btn type="submit">{loading ? 'wait...' : 'Sign up'}</Btn>
+						<Btn size="md" type="submit">
+							{loading ? 'wait...' : 'Sign up'}
+						</Btn>
 					</div>
 					<p>
 						If you already have an account, <Link to="/signin">just click here to sign in</Link>

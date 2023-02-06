@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 type V2TxtInputComponent = {
 	// strings
 	name: string;
@@ -8,12 +7,13 @@ type V2TxtInputComponent = {
 	property?: string;
 	placeholder?: string;
 	description?: string;
-	label?: string | JSX.Element;
+	label: string | JSX.Element;
 	type: 'text' | 'url' | 'password' | 'tel' | 'email' | 'number' | 'multiline';
 	autoComplete?: 'on' | 'off';
 	autoSave?: 'on' | 'off';
 	resizable?: 'both' | 'x' | 'y' | 'none';
-	value?: string | number | readonly string[] | undefined;
+	value?: string | number | readonly string[];
+	defultValue?: string | number | readonly string[];
 	// booleans
 	readOnly?: boolean;
 	disabled?: boolean;
@@ -26,7 +26,7 @@ type V2TxtInputComponent = {
 	cols?: number;
 	rows?: number;
 	// functions
-	inputRef?: React.LegacyRef<any>;
+	inputRef?: React.LegacyRef<HTMLInputElement & HTMLTextAreaElement>;
 	onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 	onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 	onLoad?: React.ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -36,6 +36,7 @@ type V2TxtInputComponent = {
 };
 
 export function TxtInput(props: V2TxtInputComponent) {
+	const [value, setValue] = useState<string | number | readonly string[] | undefined>([]);
 	const [show, setShow] = useState(false);
 	const resize = () => {
 		switch (props.resizable) {
@@ -57,13 +58,20 @@ export function TxtInput(props: V2TxtInputComponent) {
 				<div>
 					<textarea
 						name={props.name}
-						value={props.value}
+						defaultValue={props.defultValue}
+						value={(props.value, value)}
 						id={props.id}
 						cols={props.cols}
 						rows={props.rows}
 						onFocus={props.onFocus}
 						onMouseEnter={props.onMouseEnter}
 						onMouseLeave={props.onMouseLeave}
+						onChange={
+							(props.onChange,
+							(e) => {
+								setValue(e.target.value);
+							})
+						}
 						onClick={props.onClick}
 						onLoad={props.onLoad}
 						property={props.property}
@@ -85,12 +93,14 @@ export function TxtInput(props: V2TxtInputComponent) {
 			) : (
 				<div className="flex items-center justify-end">
 					<input
-						onChange={(e) => {
-							if (props.onChange) {
-								props.onChange(e);
-							}
-						}}
-						value={props.value}
+						onChange={
+							(props.onChange,
+							(e) => {
+								setValue(e.target.value);
+							})
+						}
+						defaultValue={props.defultValue}
+						value={(props.value, value)}
 						onFocus={props.onFocus}
 						onMouseEnter={props.onMouseEnter}
 						onMouseLeave={props.onMouseLeave}
@@ -112,25 +122,49 @@ export function TxtInput(props: V2TxtInputComponent) {
 						maxLength={props.maxLength}
 						minLength={props.minLength}
 						className={`w-full rounded-md bg-gray-400/30 py-2 px-2.5 ${
-							props.type == 'password' && 'pr-10'
-						} outline-none ring-sky-400 focus:ring-2`}
+							value && value.toString.length > 0 && 'pr-10'
+						} ${props.type == 'password' && 'pr-10'} outline-none ring-sky-400 focus:ring-2`}
 					/>
-					{props.type == 'password' && (
-						<button
-							type="button"
-							title={`${show ? 'Hide' : 'Show'} password`}
-							onClick={() => setShow(!show)}
-							className="absolute mr-2.5 h-6 w-6 rounded text-xs outline-none hover:bg-gray-400/60 focus:bg-gray-400/30 active:scale-90"
-						>
-							{show ? '􀋰' : '􀋮'}
-						</button>
-					)}
+					<div className="absolute mr-2 flex h-6 text-base font-medium text-gray-300">
+						{props.type == 'password' ? (
+							<button
+								type="button"
+								title={`${show ? 'Hide' : 'Show'} password`}
+								onClick={() => setShow(!show)}
+								className="w-6 rounded outline-none focus-visible:bg-gray-500/30 active:scale-90"
+							>
+								{show ? '􀋰' : '􀋮'}
+							</button>
+						) : (
+							value &&
+							value.toString().length > 0 && (
+								<button
+									type="reset"
+									onClick={() => {
+										setValue('');
+									}}
+									className="w-6 rounded font-black outline-none focus-visible:bg-gray-600/30 active:scale-90"
+								>
+									􀁡
+								</button>
+							)
+						)}
+					</div>
 				</div>
 			)}
 
 			<span className="my-1.5 text-lg font-medium">
 				{props.label}
 				{props.required && <span className="ml-0.5 text-red-500">*</span>}
+				{props.maxLength && (
+					<span
+						className={`${
+							value && value.toString().length == props.maxLength ? 'text-amber-200' : 'font-normal'
+						} ml-3 text-sm`}
+					>
+						{value && value.toString().length > 0 ? value.toString().length : 0}/{props.maxLength}
+					</span>
+				)}
 			</span>
 		</label>
 	);
