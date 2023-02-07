@@ -1,5 +1,5 @@
 import { auth, db } from './firebase.config';
-import type { UserCredential } from 'firebase/auth';
+import type { AuthError } from 'firebase/auth';
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
@@ -14,12 +14,10 @@ import { doc, setDoc } from 'firebase/firestore';
 export async function SignIn(email: string, pword: string) {
 	return await signInWithEmailAndPassword(auth, email, pword)
 		.then((res) => {
-			console.log('success to signin.');
-			return res;
+			return [true, ''];
 		})
-		.catch((err) => {
-			console.error(err);
-			return undefined;
+		.catch((err: AuthError) => {
+			return [false, err.code];
 		});
 }
 // アカウントを作成する関数
@@ -48,11 +46,13 @@ export async function SignUp(name: string, email: string, password: string) {
 
 // ログアウト機能を実装する関数
 export async function signOut() {
-	await signout(auth)
+	return await signout(auth)
 		.then(() => {
 			console.log('success to signout');
+			return true;
 		})
 		.catch((err) => {
 			console.error(err);
+			return false
 		});
 }

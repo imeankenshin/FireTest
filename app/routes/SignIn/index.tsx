@@ -2,13 +2,18 @@ import { Form, Link, useLocation, useNavigate } from '@remix-run/react';
 import React, { useRef, useState } from 'react';
 import { SignIn } from '~/firebase/auth';
 import Btn from '~/lib/components/Button/Button';
+import { useNotification } from '~/lib/components/Toast/Notification';
 import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
 
 export default function Index() {
 	//Refs
-	const [emailRef, passwordRef] = [useRef<HTMLInputElement & HTMLTextAreaElement>(null), useRef<HTMLInputElement & HTMLTextAreaElement>(null)];
+	const [emailRef, passwordRef] = [
+		useRef<HTMLInputElement & HTMLTextAreaElement>(null),
+		useRef<HTMLInputElement & HTMLTextAreaElement>(null)
+	];
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const notice = useNotification();
 	const locate = useLocation();
 	const query = new URLSearchParams(locate.search);
 
@@ -20,6 +25,7 @@ export default function Index() {
 			await SignIn(emailRef.current.value, passwordRef.current.value)
 				.then((res) => {
 					if (res[0]) {
+						notice.success('Successfully logged in.');
 						navigate(`${query.get('next') ? query.get('next') : '/'}`);
 					} else {
 						if (res[1] == 'auth/user-not-found') {

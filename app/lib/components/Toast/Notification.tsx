@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { Toast } from './Toast';
 
 const defaultValue: {
@@ -25,9 +24,22 @@ type V2ToastComponent = {
 	title?: string;
 };
 
-export function NotificationCenter(props: any): JSX.Element {
+type V2NotificationCenterComponent = {
+	children: React.ReactNode;
+	position?: 'tl' | 'tr' | 'bl' | 'br';
+};
+
+export function NCenter(props: V2NotificationCenterComponent): JSX.Element {
 	// states
 	const [notes, setNotes] = useState<V2ToastComponent[]>([]);
+	const pickPosition = () => {
+		switch (props.position) {
+			case 'bl':
+				return 'left-0 bottom-0';
+			default:
+				return 'bottom-0 right-0';
+		}
+	};
 	// functions
 	// base
 	function logBase(
@@ -66,9 +78,17 @@ export function NotificationCenter(props: any): JSX.Element {
 		<NotificationContext.Provider
 			value={{ log: log, info: info, error: error, warn: warn, success: success }}
 		>
-    <div className="pointer-events-none fixed bottom-0 right-0 z-50 flex h-screen w-full max-w-md flex-col items-end justify-end p-8">
+			<div
+				className={`pointer-events-none fixed ${pickPosition()} z-50 flex h-screen w-full max-w-md flex-col items-end justify-end overflow-x-hidden overflow-y-scroll p-8`}
+			>
 				{notes.map((value, idx) => (
-					<Toast status={value.status} onClose={()=>setNotes(notes.filter((fruit, index) => (fruit !== notes[idx])))} transition="right" title={value.title} key={idx} s={5}>
+					<Toast
+						status={value.status}
+						onClose={() => setNotes(notes.filter((fruit, index) => fruit !== notes[idx]))}
+						transition="right"
+						title={value.title}
+						key={idx}
+					>
 						{value.message}
 					</Toast>
 				))}

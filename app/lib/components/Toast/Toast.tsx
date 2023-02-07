@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { render } from 'react-dom';
 
 type V2ToastComponent = {
@@ -11,7 +11,7 @@ type V2ToastComponent = {
 	icon?: React.ReactNode;
 	// functions
 	onClick?: React.MouseEventHandler<HTMLDivElement>;
-	onClose?: (()=>void)|void;
+	onClose?: (() => void) | void;
 };
 /** This is a Voyager2's component for notice.
  *@param children the content of this component
@@ -53,15 +53,16 @@ export function Toast(props: V2ToastComponent) {
 	const toastRef = useRef<HTMLDivElement>(null);
 
 	// functions
-	const deleteThis = () => {
+	const deleteThis = useCallback(() => {
 		setDefined(false);
 		setTimeout(() => {
 			setExist(false);
-			if(props.onClose){
+			if (props.onClose) {
 				props.onClose();
 			}
 		}, 200);
-	};
+	}, [props]);
+	// useEffect
 	useEffect(() => {
 		setExist(true);
 		setTimeout(() => {
@@ -72,7 +73,7 @@ export function Toast(props: V2ToastComponent) {
 				deleteThis();
 			}, props.s * 1000);
 		}
-	}, [props.s]);
+	}, [deleteThis, props.s]);
 	return (
 		<>
 			{exist ? (

@@ -24,12 +24,12 @@ export function AuthContextProvider(props: any) {
 	const [isLoading, setLoading] = useState(true);
 	const [user, setUser] = useState<User | null>(null);
 	const [store, setStore] = useState<DocumentData | undefined>(undefined);
-
 	useEffect(() => {
 		onAuthStateChanged(auth, (res) => {
 			setLoading(true);
 			setUser(res);
 			if (res) {
+				//TODO: Set the default value of the store state to null, then conditionally call the getDoc function outside the callback if the res is not null.
 				getDoc(doc(db, 'users', res.uid)).then((res) => {
 					setStore(res.data());
 				});
