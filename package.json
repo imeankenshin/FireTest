@@ -8,6 +8,7 @@
 		"dev": "run-p \"dev:*\"",
 		"dev:css": "postcss styles --base styles --dir app -w",
 		"dev:remix": "remix dev",
+		"format": "prettier --write .",
 		"generate:css": "pnpx tailwindcss -o ./app/tailwind.css",
 		"test": "vitest",
 		"coverage": "vitest run --coverage"

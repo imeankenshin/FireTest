@@ -1,3 +1,14 @@
 .env
-public/**/*
-node_modules/**/*
+public/
+node_modules/
+
+pnpm-lock.yaml
+build/
+app/tailwind.css
+
+# config files
+remix.config.js
+remix.env.d.ts
+tsconfig.json
+vitest.config.ts
+.eslintrc.js
