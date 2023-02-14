@@ -100,7 +100,7 @@ export function Toast(props: V2ToastComponent) {
 					</div>
 					<button
 						onClick={deleteThis}
-						className={`h-7 w-7 rounded text-base ${colorPicker()[2]} active:scale-90`}
+						className={`h-7 w-7 rounded select-none text-base ${colorPicker()[2]} active:scale-90`}
 					>
 						􀆄
 					</button>

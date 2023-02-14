@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from '@remix-run/react';
+import { Link, Outlet, useLocation, useNavigate } from '@remix-run/react';
 import { updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useRef } from 'react';
@@ -7,6 +7,7 @@ import { db } from '~/firebase/firebase.config';
 import Btn from '~/lib/components/Button/Button';
 import { useNotification } from '~/lib/components/Toast/Notification';
 import { TxtInput } from '~/lib/components/TxtInput/TxtInput';
+import { SideNav } from './SideNav';
 
 export default function Index() {
 	const notice = useNotification();
@@ -18,12 +19,15 @@ export default function Index() {
 	//Refs
 	const nameRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 	const introduceRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+	const photoRef = useRef<HTMLInputElement>(null);
 	async function updateUserProfile(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (usrProfile && nameRef.current && introduceRef.current) {
+			const name = nameRef.current.value;
+			const intro = introduceRef.current.value;
 			const data = {
-				name: nameRef.current.value,
-				introduce: introduceRef.current.value
+				name: name == '' ? name : usrProfile.displayName,
+				introduce: intro == '' ? intro : usrStore ? usrStore.introduce : 'Hello wolrd!'
 			};
 			const usrStoreRef = doc(db, 'users', usrProfile.uid);
 			await updateDoc(usrStoreRef, data)
@@ -32,69 +36,44 @@ export default function Index() {
 						await updateProfile(usrProfile, {
 							displayName: nameRef.current?.value
 						}).then(() => {
-							alert('Success update profile');
+							notice.success('Succesfully changed your profile.');
 							navigate('');
 						})
 				)
 				.catch((err) => {
 					console.error(err);
-					alert('something went wrong');
+					notice.error('Something went wrong.');
 				});
 		} else {
 			alert('et');
 		}
 	}
+	console.log(photoRef.current?.files)
 	return (
 		<main className="flex h-full justify-center">
-			<div className="w-80 p-6">
-				<ul>
-					<li className="rounded-lg bg-sky-400/40 px-3 py-2">
-						<Link to="/account">
-							<div className="flex items-center text-lg">
-								<svg
-									className="mr-2 h-8 w-8 [&>*]:fill-white"
-									xmlns="http://www.w3.org/2000/svg"
-									version="1.1"
-									id="e"
-									x="0px"
-									y="0px"
-									viewBox="0 0 48 48"
-								>
-									<path d="M38,37c0,5-3,5-14,5s-14,0-14-5s1-8,14-8S38,32,38,37z" />
-									<ellipse cx="24" cy="16" rx="9" ry="10" />
-								</svg>
-								<span>account</span>
-							</div>
-						</Link>
-					</li>
-					<li>
-						<Link to="/account/theme">
-							<div className="flex items-center py-2 px-3">
-								<span className="mr-2 h-8 w-8 text-center text-2xl">􀎑</span>
-								Theme
-							</div>
-						</Link>
-					</li>
-					<li>
-						<Link to="/account/theme">
-							<div className="flex items-center py-2 px-3">
-								<span className="mr-2 h-8 w-8 text-center text-2xl">􁗅</span>
-								Accessibility
-							</div>
-						</Link>
-					</li>
-				</ul>
-			</div>
+			<SideNav />
 			{usr.profile ? (
 				<div className="h-full w-full overflow-y-scroll p-12 scroll:bg-transparent scroll-tb:bg-slate-300/60">
+					<Outlet />
 					<h1>User account</h1>
-					<h2 className="border-b-2 border-gray-400/60 ">Profile</h2>
+					<h2 className="my- border-b-2 border-gray-400/60 ">Profile</h2>
 					<form
 						onSubmit={async (e) => {
 							await updateUserProfile(e);
 						}}
 					>
 						<ul className="max-w-lg [&>li]:my-2">
+							<li>
+								<input
+									type="file" //TODO: Change user's photo via this node.
+									onChange={(e) => {
+										console.log(typeof e.currentTarget);
+									}}
+									ref={photoRef}
+									name="profile image"
+									id="avatar"
+								/>
+							</li>
 							<li>
 								<TxtInput
 									inputRef={nameRef}
@@ -129,17 +108,65 @@ export default function Index() {
 							Update
 						</Btn>
 					</form>
+					<h2 className="my- border-b-2 border-gray-400/60">Account</h2>
+					<ul className="[&>li]:my-4">
+						<li>
+							<Btn type="button" size="lg">
+								Delete account
+							</Btn>
+						</li>
+					</ul>
 				</div>
 			) : (
 				<div className="h-full w-full overflow-y-scroll p-12 scroll:bg-transparent scroll-tb:bg-slate-300/60">
 					<h1>You're not Signing in.</h1>
 					<p>You need to sign in with you account first.</p>
 					<Link to={'/signin?next=' + nowLocate}>click here to sing in!</Link>
-					<Btn onClick={() => { notice.log("hello wolrd"); } } type={'button'} size={'sm'}>Log</Btn>
-					<Btn onClick={() => { notice.info("information"); } } type={'button'} size={'sm'}>info</Btn>
-					<Btn onClick={() => { notice.warn("日本語で遊ぼう"); } } type={'button'} size={'sm'}>warn</Btn>
-					<Btn onClick={() => { notice.error("something went wrong."); } } type={'button'} size={'sm'}>error</Btn>
-					<Btn onClick={() => { notice.success("success login"); } } type={'button'} size={'sm'}>success</Btn>
+					<Btn
+						onClick={() => {
+							notice.log('hello wolrd');
+						}}
+						type={'button'}
+						size={'sm'}
+					>
+						Log
+					</Btn>
+					<Btn
+						onClick={() => {
+							notice.info('information');
+						}}
+						type={'button'}
+						size={'sm'}
+					>
+						info
+					</Btn>
+					<Btn
+						onClick={() => {
+							notice.warn('日本語で遊ぼう');
+						}}
+						type={'button'}
+						size={'sm'}
+					>
+						warn
+					</Btn>
+					<Btn
+						onClick={() => {
+							notice.error('something went wrong.');
+						}}
+						type={'button'}
+						size={'sm'}
+					>
+						error
+					</Btn>
+					<Btn
+						onClick={() => {
+							notice.success('success login');
+						}}
+						type={'button'}
+						size={'sm'}
+					>
+						success
+					</Btn>
 				</div>
 			)}
 		</main>

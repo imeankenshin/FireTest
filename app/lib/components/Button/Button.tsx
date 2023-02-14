@@ -18,9 +18,9 @@ function Btn(
 	}
 ) {
 	// Btn sizes
-	const sm = 'text-sm ';
-	const md = 'px-3';
-	const lg = '';
+	const sm = 'text-sm  p-2 ';
+	const md = 'px-3 py-2';
+	const lg = 'px-4 py-3.5';
 	const sizeSelector = () => {
 		switch (props.size) {
 			case 'lg':
@@ -40,7 +40,7 @@ function Btn(
 			name={props.name}
 			className={`${sizeSelector()} ${
 				props.fullWidth && 'w-full'
-			} mx-2 rounded-md bg-violet-500 p-2 font-medium active:scale-95`}
+			} mx-2 rounded-md bg-violet-500 font-medium active:scale-95`}
 		>
 			{props.children}
 		</button>

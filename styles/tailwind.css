@@ -4,16 +4,19 @@
 
 @layer base {
 	:root {
-		font-family: Roboto, 'Noto Sans', 'SF Pro';
+		font-family: Roboto, system-ui, 'SF Pro';
 		@apply text-white;
 	}
 	a {
 		@apply font-medium text-sky-400 outline-none hover:underline focus:underline;
 	}
+	::-webkit-keygen-select {
+		@apply bg-red-700;
+	}
 	h1 {
-		@apply text-5xl font-semibold;
+		@apply my-4 text-5xl font-semibold;
 	}
 	h2 {
-		@apply text-3xl font-semibold;
+		@apply py-2 text-3xl font-semibold;
 	}
 }

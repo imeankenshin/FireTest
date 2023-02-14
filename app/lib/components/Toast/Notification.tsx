@@ -36,13 +36,19 @@ export function NCenter(props: V2NotificationCenterComponent): JSX.Element {
 		switch (props.position) {
 			case 'bl':
 				return 'left-0 bottom-0';
+			case 'br':
+				return 'right-0 bottom-0';
+			case 'tl':
+				return 'left-0 top-0';
+			case 'tr':
+				return 'right-0 top-0';
 			default:
 				return 'bottom-0 right-0';
 		}
 	};
 	// functions
 	// base
-	function logBase(
+	function sendNotification(
 		message: React.ReactNode,
 		title?: string,
 		status?: 'log' | 'info' | 'error' | 'warn' | 'success'
@@ -56,30 +62,31 @@ export function NCenter(props: V2NotificationCenterComponent): JSX.Element {
 	}
 	// log
 	function log(message: React.ReactNode, title?: string) {
-		logBase(message, title, 'log');
+		sendNotification(message, title, 'log');
 	}
 	// info
 	function info(message: React.ReactNode, title?: string) {
-		logBase(message, title, 'info');
+		sendNotification(message, title, 'info');
 	}
 	// error
 	function error(message: React.ReactNode, title?: string) {
-		logBase(message, title, 'error');
+		sendNotification(message, title, 'error');
 	}
 	// warn
 	function warn(message: React.ReactNode, title?: string) {
-		logBase(message, title, 'warn');
+		sendNotification(message, title, 'warn');
 	}
 	// success
 	function success(message: React.ReactNode, title?: string) {
-		logBase(message, title, 'success');
+		sendNotification(message, title, 'success');
 	}
 	return (
 		<NotificationContext.Provider
 			value={{ log: log, info: info, error: error, warn: warn, success: success }}
 		>
 			<div
-				className={`pointer-events-none fixed ${pickPosition()} z-50 flex h-screen w-full max-w-md flex-col items-end justify-end overflow-x-hidden overflow-y-scroll p-8`}
+				className={`pointer-events-none fixed ${pickPosition()} z-50 flex h-screen w-full max-w-md flex-col items-end
+				justify-end overflow-hidden p-8 scroll:bg-transparent scroll-tb:bg-gray-300/60`}
 			>
 				{notes.map((value, idx) => (
 					<Toast
